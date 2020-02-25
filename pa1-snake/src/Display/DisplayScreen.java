@@ -1,0 +1,70 @@
+package Display;
+
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.JFrame;
+
+import Game.GameStates.State;
+
+/**
+ * Created by AlexVR on 7/1/2018.
+ */
+
+public class DisplayScreen {
+
+    private JFrame frame;
+    private Canvas canvas;
+    private String title;
+    private int width, height;
+
+    public DisplayScreen(String title, int width, int height){
+        this.title = title;
+        this.width = width;
+        this.height = height;
+
+
+
+        createDisplay();
+    }
+
+    private void createDisplay(){
+        frame = new JFrame(title);
+        frame.setSize(width, height);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        Color bgColor = new Color (255,0,255);
+        // set bg color to purple using a new color object formed by its RBG values
+        frame.setBackground(bgColor);
+
+        try {
+            frame.setIconImage(ImageIO.read(new File("res/Sheets/icon.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        canvas = new Canvas();
+        canvas.setPreferredSize(new Dimension(width, height));
+        canvas.setMaximumSize(new Dimension(width, height));
+        canvas.setMinimumSize(new Dimension(width, height));
+        canvas.setFocusable(false);
+        canvas.setBackground(bgColor);
+        
+
+        frame.add(canvas);
+        frame.pack();
+    }    
+    public Canvas getCanvas(){
+        return canvas;
+    }
+
+    public JFrame getFrame(){
+        return frame;
+    }
+
+}
